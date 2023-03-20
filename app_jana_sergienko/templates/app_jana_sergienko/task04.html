@@ -1,0 +1,17 @@
+<html>
+<head>
+</head>
+<body>
+
+<form action="/~/jana_sergienko/lesson04/task04/" method="POST">
+    {% csrf_token %}
+
+Line: <input type="text" name="str" value="{{str}}">
+
+<button type="submit">Palindrom</button>
+</form>
+
+<h1>{{ result }}</h1>
+
+</body>
+</html>

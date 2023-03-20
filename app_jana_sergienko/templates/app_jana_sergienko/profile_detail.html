@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <h1>{{ request.user.name }}</h1>
+    <p>
+        <a href="/~/jana_sergienko/profile/update/">Update</a>
+    </p>
+
+    <ul>
+        <li>Preferences: {{ object.preferences }}</li>
+    </ul>
+
+</div>
+
+{% endblock content %}

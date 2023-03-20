@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Delete {{ object.name }}{% endblock title %}
+
+{% block content %}
+
+<style>
+    h1 {
+        background: #C0C0C0;
+        border-radius: 20px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+       }
+    .contact {
+        text-shadow: 1px 2px black, 0 0 1em #FFFFFF;
+        color: white;
+        font-size: 1.5em;
+        }
+    .button {
+        text-shadow: 1px 1.5px black, 0 0 1em #FFFFFF;
+        background: #C0C0C0;
+        border-radius: 5px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+        margin-bottom: 15px;
+        }
+    p {
+        text-shadow: 1px 1.2px black, 0 0 1em #696969;
+        color: #696969;
+        font-size: 1.5em;
+        }
+</style>
+
+<div class="container">
+    <em class="bt"><b>&nbsp;</b></em>
+    <h1 align="center">
+        <b class="contact">Delete {{ object.name }}</b>
+    </h1>
+
+    <p>Delete?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button"><font color="#FFFFFF">Delete</font></button>
+    </form>
+    <a href="/~/jana_sergienko/contacts/{{ object.pk }}/">
+        <button class="button"><font color="#FFFFFF">Don't delete</font></button>
+    </a>
+
+</div>
+
+{% endblock content %}

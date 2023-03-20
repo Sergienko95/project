@@ -1,0 +1,67 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: ./
+      args:
+        - PORT=8000
+        - PYTHON_VERSION=3.10.8
+    container_name: webapp.m-pt1-58-22
+    entrypoint: ["task", "run-server-prod"]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgres://m-pt1-58-22:m-pt1-58-22@db:5432/m-pt1-58-22}
+      ELASTIC_URL: ${ELASTIC_URL:-http://elastic:m-pt1-58-22@elastic:9200}
+    depends_on:
+      - db
+      - elastic
+    image: webapp.m-pt1-58-22
+    networks:
+      - m-pt1-58-22
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - ./:/app:rw
+  db:
+    container_name: db.m-pt1-58-22
+    environment:
+      POSTGRES_DB: "m-pt1-58-22"
+      POSTGRES_USER: "m-pt1-58-22"
+      POSTGRES_PASSWORD: "m-pt1-58-22"
+    image: postgres:15.1
+    networks:
+      - m-pt1-58-22
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.artifacts/postgres/data/:/var/lib/postgresql/data
+  elastic:
+    container_name: elastic.m-pt1-58-22
+    environment:
+      - "bootstrap.memory_lock=true"
+      - "discovery.type=single-node"
+      - "ELASTIC_PASSWORD=m-pt1-58-22"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "KIBANA_PASSWORD=m-pt1-58-22"
+    image: elasticsearch:8.6.0
+    networks:
+      - m-pt1-58-22
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+      - "5601:5601"
+    volumes:
+      - ./.artifacts/elasticsearch/data/:/usr/share/elasticsearch/data/:rw
+  dba:
+    container_name: dba.m-pt1-58-22
+    depends_on:
+      - db
+    image: adminer
+    networks:
+      - m-pt1-58-22
+    ports:
+      - "8001:8080"
+    restart: unless-stopped
+networks:
+  m-pt1-58-22:
+    driver: bridge

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Контакты</h1>
+
+    {% if object_list %}
+    <ul>
+        {% for contact in object_list %}
+        <li>{{ contact.name }}, {{ contact.age }} years, phone: {{ contact.phone }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="alert alert-light" role="alert">
+        Контактов ещё нет.
+    </div>
+    {% endif %}
+
+    <hr>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p>
+            <button class="btn btn-primary" type="submit">Добавить</button>
+        </p>
+    </form>
+
+</div>
+
+{% endblock content %}

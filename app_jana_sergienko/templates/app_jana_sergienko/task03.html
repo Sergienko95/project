@@ -1,0 +1,19 @@
+<html>
+<head>
+</head>
+<body>
+
+<form action="/~/jana_sergienko/lesson04/task03/" method="POST">
+    {% csrf_token %}
+
+Side1: <input type="text" name="s1" value="{{s1}}">
+Side2: <input type="text" name="s2" value="{{s2}}">
+Side3: <input type="text" name="s3" value="{{s3}}">
+
+<button type="submit">Triangle</button>
+</form>
+
+<h1>{{ result }}</h1>
+
+</body>
+</html>

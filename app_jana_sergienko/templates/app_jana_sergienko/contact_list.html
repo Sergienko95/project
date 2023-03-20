@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Contacts{% endblock title %}
+
+{% block content %}
+
+{{ request.user }}
+
+<style>
+    h1 {
+        background: #C0C0C0;
+        border-radius: 20px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+       }
+    .look, .add, .tag {
+        text-shadow: 1px 1.5px black, 0 0 1em #FFFFFF;
+        background: #C0C0C0;
+        border-radius: 5px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+       }
+    .contact {
+        text-shadow: 1px 2px black, 0 0 1em #FFFFFF;
+        color: white;
+        font-size: 1.5em;
+        }
+    .search {
+        border: 2px solid #696969;
+        box-shadow: 0 0 7px #666;
+        }
+</style>
+
+<div class="container">
+    <em class="bt"><b>&nbsp;</b></em>
+    <h1 align="center"><b class="contact">Contacts</b></h1>
+    <em class="bb"><b>&nbsp;</b></em>
+    {% if request.user %}
+    <form action="/~/jana_sergienko/contacts/search/" method="get">
+        {% csrf_token %}
+        <p>
+            <input id="idSearch" type="text" name="search"
+                   value="{{search_text|default:''}}" placeholder="Search...">
+            <button class="look" type="submit"><font color="#FFFFFF">Look for</font></button>
+        </p>
+    </form>
+
+    <div class="row">
+        <div class="col-8">
+            {% if object_list %}
+            <ol>
+                {% for contact in object_list %}
+                <li><a href="/~/jana_sergienko/contacts/{{contact.pk}}/">{{contact.name}}</a>
+                </li>
+                {% endfor %}
+            </ol>
+            {% else %}
+            <div class="alert alert-light" role="alert">
+                No contacts
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-4">
+            {% for tag in tags_assigned %}
+            <form method="post"
+                  action="/~/jana_sergienko/contacts/search/tags/{{tag.pk}}/unassign/"
+                  style="display: inline; margin-right: 2px">
+                {% csrf_token %}
+                <button class="tag"><font color="#FFFFFF">#{{tag.name}}</font></button>
+            </form>
+            {% endfor %}
+            {% for tag in tags_unassigned %}
+            <form method="post"
+                  action="/~/jana_sergienko/contacts/search/tags/{{tag.pk}}/assign/"
+                  style="display: inline; margin-right: 2px">
+                {% csrf_token %}
+                <button class="btn btn-secondary">#{{tag.name}}</button>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+
+    <p>
+        <a href="/~/jana_sergienko/contacts/add/">
+            <button class="add" type="submit"><font color="#FFFFFF">Add</font></button>
+        </a>
+    </p>
+    {% else %} {# not request.user #}
+    <p>
+        <a href="{% url 'login' %}">Log in to use your contacts.</a>
+    </p>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action }} :: Contacts{% endblock title %}
+
+{% block content %}
+
+<style>
+    h1 {
+        background: #C0C0C0;
+        border-radius: 20px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+       }
+    .contact {
+        text-shadow: 1px 2px black, 0 0 1em #FFFFFF;
+        color: white;
+        font-size: 1.5em;
+        }
+    .letter {
+        text-shadow: 1px 1.2px black, 0 0 1em #696969;
+        color: #696969;
+        font-size: 1em;
+        }
+    .button {
+        text-shadow: 1px 1.5px black, 0 0 1em #FFFFFF;
+        background: #C0C0C0;
+        border-radius: 5px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+        }
+
+</style>
+
+<div class="container">
+    <em class="bt"><b>&nbsp;</b></em>
+    <h1 align="center">
+        <b class="contact">Contacts ({{ action }})</b>
+    </h1>
+     <em class="bb"><b>&nbsp;</b></em>
+
+    <form method="post">
+        {% csrf_token %}
+        <font class="letter">{{ form.as_p }}</font>
+        <p>
+            <button class="button" type="submit"><font color="#FFFFFF">{{ action|default:'Do' }}
+            </font>
+            </button>
+        </p>
+    </form>
+
+</div>
+
+{% endblock content %}

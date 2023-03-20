@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.name }}{% endblock title %}
+
+{% block content %}
+
+<style>
+    h1 {
+        background: #C0C0C0;
+        border-radius: 20px;
+        border: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+       }
+    .contact {
+        text-shadow: 1px 2px black, 0 0 1em #FFFFFF;
+        color: white;
+        font-size: 1.5em;
+        }
+    .link {
+        border-radius: 10px;
+        color: 2px solid #696969;
+        padding: 5px;
+        box-shadow: 0 0 7px #666;
+        }
+</style>
+
+<div class="container">
+    <em class="bt"><b>&nbsp;</b></em>
+    <h1 align="center">
+        <b class="contact">{{ object.name }}</b>
+    </h1>
+    <em class="bb"><b>&nbsp;</b></em>
+    <p class="link">
+        <a href="/~/jana_sergienko/contacts/">Back</a>
+        |
+        <a href="/~/jana_sergienko/contacts/{{ object.pk }}/update/">Update</a>
+        |
+        <a href="/~/jana_sergienko/contacts/{{ object.pk }}/delete/">Delete</a>
+    </p>
+
+    <ul>
+        <li>Age: {{ object.age }}</li>
+        <li>Phone: {{ object.phone }}</li>
+    </ul>
+
+</div>
+
+<div class="col-4">
+            <div>
+                {% for tag in tags_assigned %}
+                <form method="post"
+                      action="/~/jana_sergienko/contacts/{{object.pk}}/tags/{{tag.pk}}/unassign/"
+                      style="display: inline; margin-right: 2px">
+                    {% csrf_token %}
+                    <button class="btn btn-primary">#{{tag.name}}</button>
+                </form>
+                {% endfor %}
+                {% for tag in tags_unassigned %}
+                <form method="post"
+                      action="/~/jana_sergienko/contacts/{{object.pk}}/tags/{{tag.pk}}/assign/"
+                      style="display: inline; margin-right: 2px">
+                    {% csrf_token %}
+                    <button class="btn btn-secondary">#{{tag.name}}</button>
+                </form>
+                {% endfor %}
+            </div>
+            <form method="post"
+                  action="/~/jana_sergienko/contacts/{{object.pk}}/tags/add/">
+                {% csrf_token %}
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">#</span>
+                    </div>
+                    <input type="text" class="form-control" name="tag_name" placeholder="tag" style="width: 8em">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary" style="height: 100%">&plus;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

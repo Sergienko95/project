@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/~/jana_sergienko/classAverage/" method="POST">
+    {% csrf_token %}
+
+    <input name="number" value="0">
+    <button type="submit">Save</button>
+</form>
+<p>Average: {{number_avg}}</p>
+</body>
+</html>
